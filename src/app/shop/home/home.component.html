@@ -1,0 +1,57 @@
+<carousel>
+  <slide>
+    <div class="text-center py-5 bg-dark text-white">
+      <h2>Welcome to Shop</h2>
+      <div class="lead">
+        <h3>Masks Launched !</h3>
+        <p>Masks are available now !</p>
+      </div>
+    </div>
+  </slide>
+  <slide>
+    <div class="text-center py-5 bg-dark text-white">
+      <h2>Welcome to Shop</h2>
+      <div class="lead">
+        <h3>Coming soon !</h3>
+        <p>More Products coming soon !</p>
+      </div>
+    </div>
+  </slide>
+  <slide>
+    <div class="text-center py-5 bg-dark text-white">
+      <h2>Welcome to Shop</h2>
+      <div class="lead">
+        <h3>Watch out this tab for more !</h3>
+        <p>We're ever evolving ever changing our products. Watch out.</p>
+      </div>
+    </div>
+  </slide>
+</carousel>
+
+<div class="container mt-3">
+  <h3>Categories </h3>
+  <div class="row mt-4">
+
+    <div class="col-6 col-sm-6 col-md-4 col-lg-3" *ngFor="let category of categories">
+      <div class="card position-relative pointer-cursor category text-center"  routerLink="../products/{{category.id}}">
+        <span  *ngFor="let bullet of category.bullets" class="position-absolute badge {{bullet.class}}">{{bullet.value}}</span>
+        <div class="p-3">
+          <div class="categoryicon" *ngIf="category.iconType ==  'font-awesome-icon'">
+            <span class=" fa-4x" [ngClass]="category.icon"></span>
+          </div>
+          <div class="mt-3 font-weight-bold grey-color">{{category.name}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+      <div class="card position-relative pointer-cursor category text-center"  routerLink="../products/0">
+        <div class="p-3">
+          <div class="categoryicon">
+            <i class="fas fa-infinity fa-4x"></i>
+          </div>
+          <div class="mt-3 font-weight-bold grey-color">All Products</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

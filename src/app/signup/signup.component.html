@@ -1,0 +1,270 @@
+<div class="text-center content">
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark d-flex justify-content-between">
+    <span>
+      <img src="../../assets/Images/logo/apple-touch-icon.png" class="logo-img pb-2"/>&nbsp;<a class="navbar-brand text-white">oshaque</a>
+    </span>
+    <form class="form-inline mt-2 mt-md-0">
+      <button class="btn btn-primary my-2  d-none d-md-block  my-sm-0" type="button" [routerLink]="['../home']">Back</button>
+    </form>
+    <button class="btn btn-primary my-2 my-sm-0 d-md-none" type="button" [routerLink]="['../home']">Back</button>
+  </nav>
+</div>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-sm-12 col-md-9">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Sign Up</h5>
+          <h6 class="card-subtitle mb-2 text-muted">First steps to Poshaque.</h6>
+          <hr>
+          <div class="mt-3">
+            <form #f="ngForm" (ngSubmit)="f.form.valid && signup()">
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="firstname " class="font-weight-bold">First Name</label>
+                  <input type="email" pattern="^[a-zA-Z]+$" class="form-control" [(ngModel)]="user.firstName" #firstName="ngModel"
+                   placeholder="Enter First Name" name="firstname" id="firstname" required>
+                   <small *ngIf="firstName.invalid && f.submitted" class="text-danger">
+                    <div *ngIf="firstName.errors.required" class="mt-1 ml-1">
+                       First Name is required.
+                    </div>
+                    <div *ngIf="firstName.errors.pattern">
+                       First Name is invalid.
+                    </div>
+                 </small>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="lastname " class="font-weight-bold">Last Name</label>
+                  <input type="text" class="form-control" [(ngModel)]="user.lastName" #lastName="ngModel"
+                   placeholder="Enter Last Name" pattern="^[a-zA-Z]+$"  name="lastname" id="lastname" required>
+                   <small *ngIf="lastName.invalid && f.submitted" class="text-danger">
+                    <div *ngIf="lastName.errors.required" class="mt-1 ml-1">
+                       Last Name is required.
+                    </div>
+                    <div *ngIf="lastName.errors.pattern">
+                       Last Name is invalid.
+                    </div>
+                 </small>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputPhone " class="font-weight-bold">Phone</label>
+                  <input type="number" class="form-control" pattern="^[0-9]{10}$" [(ngModel)]="user.phone"  #phone="ngModel"
+                  placeholder="Enter Phone" name="inputPhone" id="inputPhone" required>
+                  <small *ngIf="phone.invalid && f.submitted" class="text-danger">
+                    <div *ngIf="phone.errors.required" class="mt-1 ml-1">
+                       Phone is required.
+                    </div>
+                    <div *ngIf="phone.errors.pattern">
+                      Phone is invalid.
+                    </div>
+                 </small>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputEmail4 " class="font-weight-bold">Email</label>
+                  <input type="email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" 
+                  [(ngModel)]="user.email" placeholder="Enter Email" name="email"  id="inputEmail4" #userEmail="ngModel" required>
+                  <small *ngIf="userEmail.invalid && f.submitted" class="text-danger">
+                    <div *ngIf="userEmail.errors.required" class="mt-1 ml-1">
+                       Email is required.
+                    </div>
+                    <div *ngIf="userEmail.errors.pattern">
+                       Email is invalid.
+                    </div>
+                 </small>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="password " class="font-weight-bold">Password</label>
+                  <input type="password" class="form-control" #userPassword="ngModel" [(ngModel)]="user.password" 
+                  placeholder="Enter Password" name="password" id="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
+                  <small *ngIf="userPassword.invalid && f.submitted" class="text-danger">
+                    <div *ngIf="userPassword.errors.required" class="mt-1 ml-1">
+                       Password is required.
+                    </div>
+                    <div *ngIf="userPassword.errors.pattern">
+                       Password should contain minimum eight characters, at least one letter and one number.
+                    </div>
+                 </small>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="inputPassword4 " class="font-weight-bold">Confirm Passowrd</label>
+                  <input type="password" class="form-control" #confirmPassword="ngModel" [(ngModel)]="user.confirmPassword"
+                  placeholder="Confirm Password" name="inputPassword4" id="inputPassword4" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required>
+                  <small *ngIf="confirmPassword.invalid && f.submitted" class="text-danger">
+                    <div *ngIf="confirmPassword.errors.required" class="mt-1 ml-1">
+                       Confirm Password is required.
+                    </div>
+                    <div *ngIf="confirmPassword.errors.pattern">
+                      Password should contain minimum eight characters, at least one letter and one number.
+                    </div>
+                 </small>
+                </div>
+              </div>
+              <div>
+                <small *ngIf="showPasswordError" class="text-danger">
+                  Passwords do not match.
+                </small>
+              </div>
+              <hr>
+              
+              <div class="d-flex justify-content-between">
+                  <h5>Addresses</h5>
+                  <button type="button" class="btn btn-sm btn-primary" (click)="showAddressForm = true" *ngIf="!showAddressForm">Add Address</button>
+              </div>
+              <div class="d-flex justify-content-center" *ngIf="!showAddressForm && listOfAddress.length == 0">
+                No Address added.
+              </div>
+              <div>
+                <small *ngIf="showAddressError" class="text-danger">
+                  Add one address before signing up.
+                </small>
+              </div>
+              <div class="mt-1" *ngFor="let address of listOfAddress; index as i">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    {{address.addressLine1}}, {{address.addressLine2}}, {{address.city}}, {{address.state}} - {{address.zip}}
+                  </div>
+                  <div>
+                    <span class="pointer-cursor" (click)="editAddress(i)"><i class="fa fa-pencil-square" aria-hidden="true"></i></span> &nbsp;&nbsp;
+                    <span class="pointer-cursor" (click)="deleteAddress(i)"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf = "showAddressForm"> 
+              <form #addressForm="ngForm" (ngSubmit)="addressForm.form.valid && addAddress()">
+                <div class="form-group mt-2">
+                  <label for="inputAddress" class="font-weight-bold">Address 1</label>
+                  <input type="text" [(ngModel)]="address.addressLine1" maxlength="50" class="form-control" required
+                  name="inputAddress" #addr1="ngModel" id="inputAddress" placeholder="Enter Address 1">
+                  <small *ngIf="addr1.invalid && addressForm.submitted" class="text-danger">
+                    <div *ngIf="addr1.errors.required" class="mt-1 ml-1">
+                       Address 1 is required.
+                    </div>
+                    <div *ngIf="addr1.errors.pattern">
+                      Address 1 is invalid.
+                    </div>
+                 </small>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-9">
+                    <label for="inputAddress2" class="font-weight-bold">Address 2</label>
+                    <input type="text" class="form-control" maxlength="50" [(ngModel)]="address.addressLine2" required
+                    name="inputAddress2" #addr2="ngModel" id="inputAddress2" placeholder="Enter Address 2">
+                    <small *ngIf="addr2.invalid && addressForm.submitted" class="text-danger">
+                      <div *ngIf="addr2.errors.required" class="mt-1 ml-1">
+                        Address 2 is required.
+                      </div>
+                      <div *ngIf="addr2.errors.pattern">
+                        Address 2 is invalid.
+                      </div>
+                   </small>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label for="inputAddress2" class="font-weight-bold">Landmark</label>
+                    <input type="text" #landmark="ngModel" maxlength="20" class="form-control" [(ngModel)]="address.landmark" required
+                    name="landmark" id="landmark" placeholder="Enter Landmark">
+                    <small *ngIf="landmark.invalid && addressForm.submitted" class="text-danger">
+                      <div *ngIf="landmark.errors.required" class="mt-1 ml-1">
+                        Landmark is required.
+                      </div>
+                      <div *ngIf="landmark.errors.pattern">
+                        Landmark is invalid.
+                      </div>
+                   </small>
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label for="inputCity" class="font-weight-bold">City</label>
+                    <input type="text" class="form-control" maxlength="20" name="inputCity" id="inputCity" required
+                    [(ngModel)]="address.city" #city="ngModel" placeholder="Enter City">
+                    <small *ngIf="city.invalid && addressForm.submitted" class="text-danger">
+                      <div *ngIf="city.errors.required" class="mt-1 ml-1">
+                        City is required.
+                      </div>
+                      <div *ngIf="city.errors.pattern">
+                        City is invalid.
+                      </div>
+                   </small>
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputState" class="font-weight-bold">State</label>
+                    <input type="text" class="form-control" name="inputState" id="inputState" required
+                    [(ngModel)]="address.state" #state="ngModel"  maxlength="20" placeholder="Enter State">
+                    <small *ngIf="state.invalid && addressForm.submitted" class="text-danger">
+                      <div *ngIf="state.errors.required" class="mt-1 ml-1">
+                        State is required.
+                      </div>
+                      <div *ngIf="state.errors.pattern">
+                        State is invalid.
+                      </div>
+                   </small>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="inputZip" class="font-weight-bold">Zip</label>
+                    <input type="text" class="form-control" name="inputZip" id="inputZip" required
+                    [(ngModel)]="address.zip" #zip="ngModel" maxlength="10" placeholder="Enter Zip">
+                    <small *ngIf="zip.invalid && addressForm.submitted" class="text-danger">
+                      <div *ngIf="zip.errors.required" class="mt-1 ml-1">
+                         Zip is required.
+                      </div>
+                      <div *ngIf="zip.errors.pattern">
+                        Zip is invalid.
+                      </div>
+                   </small>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button type="button" class="btn btn-sm btn-danger"  (click)="cancelClicked()">Cancel</button>&nbsp;&nbsp;
+                  <button type="submit" class="btn btn-sm btn-success">Save</button>
+                </div>
+                </form>
+              </div>
+              <hr>
+              <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary">Sign up</button>
+              </div>
+            </form>
+          </div >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body">
+          <h5>Benefits of joining:</h5>
+          <div class="mt-4">
+            <div class="mt-2"><i class="fa fa-circle" aria-hidden="true"></i>  Timely updates.</div>
+            <div class="mt-2"><i class="fa fa-circle" aria-hidden="true"></i>  Tracking of all your orders.</div>
+            <div class="mt-2"><i class="fa fa-circle" aria-hidden="true"></i>  History of transactions.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #confirmPin let-modal>
+  <div class="modal-body padding_zero">
+    <form  #otpf="ngForm" (ngSubmit)="otpf.form.valid && verifyOTP()">
+     <div class="modal-body">
+       Hi, email with OTP has sent to your email address. ({{user.email}})
+       <div class="mt-3 mx-5 form-group">
+        <label for="OTP" class="font-weight-bold">OTP :</label>
+        <input type="text" id="OTP" name="OTP" class="form-control" [(ngModel)]="user.otp" required #otp="ngModel" placeholder="Enter OTP here"/>
+        <small *ngIf="otp.invalid && otpf.submitted" class="text-danger">
+          <div *ngIf="otp.errors.required" class="mt-1 ml-1">
+             OTP is required.
+          </div>
+       </small>
+       </div>
+     </div>
+     <div class="text-center mt-2">
+        <button type="submit" class="btn btn-success btn-sm w-25" style="margin-left: 1.5rem !important;">Verify</button>
+     </div>
+    </form>
+  </div>
+</ng-template>

@@ -1,0 +1,56 @@
+.marketing .col-lg-4 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  .marketing h2 {
+    font-weight: 400;
+  }
+  
+  .marketing .col-lg-4 p {
+    margin-right: .75rem;
+    margin-left: .75rem;
+  }
+  
+  .marketing{
+    margin-top: 4rem;
+  }
+  
+  .featurette-divider {
+    margin: 5rem 0; /* Space out the Bootstrap <hr> more */
+  }
+  
+  .featurette-heading {
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -.05rem;
+  }
+  
+  
+  @media (min-width: 40em) {
+    .featurette-heading {
+      font-size: 50px;
+    }
+  }
+  
+  @media (min-width: 62em) {
+    .featurette-heading {
+      margin-top: 7rem;
+    }
+  }
+
+  .nav-item{
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .carouselImage{
+      height: 100%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .carouselImage{
+      width: 100%;
+    }
+  }

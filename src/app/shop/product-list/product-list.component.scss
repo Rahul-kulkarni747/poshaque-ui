@@ -1,0 +1,13 @@
+.prod-image{
+    height: 150px;
+    object-fit: cover;
+}
+
+.product{
+    box-shadow: 1px 2px 6px #888888;
+    border: 0px;
+}
+
+.product:hover{
+    box-shadow: 1px 2px 6px #f57a7a;
+}

@@ -1,0 +1,135 @@
+<header  #home>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div><img src="../../assets/Images/logo/apple-touch-icon.png" class="logo-img  pb-2"/>&nbsp;<a class="navbar-brand text-white">oshaque</a></div>
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button> -->
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" [ngClass]="{'active': selectedIndex == 1}">
+          <a class="nav-link" (click) = "scrollTo(home,1)">Home <span class="sr-only">(current) </span></a>
+        </li>
+        <li class="nav-item"  [ngClass]="{'active': selectedIndex == 2}">
+          <a class="nav-link"  (click) = "scrollTo(features,2)">Features</a>
+        </li>
+        <li class="nav-item"  [ngClass]="{'active': selectedIndex == 3}">
+          <a class="nav-link" (click) = "scrollTo(aboutUs,3)" tabindex="-1">About us</a>
+        </li>
+      </ul>
+      <form class="form-inline mt-2 mt-md-0">
+        <button class="btn btn-primary my-2 my-sm-0" type="button" [routerLink]="['../login']">Sign In</button>
+      </form>
+    </div>
+    <button class="btn btn-primary my-2 my-sm-0 d-md-none" type="button" [routerLink]="['../login']">Sign In</button>
+  </nav>
+</header>
+
+<main role="main" class=" margin-top-carousel">
+  <carousel [noPause]="false" [isAnimated]="true">
+    <slide>
+      <img src="../../assets/Images/home/Carousel_2.jpg" alt="first slide" class="carouselImage" style="display: block">
+      <div class="carousel-caption d-none d-md-block">
+        <h3>First slide label</h3>
+        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+      </div>
+    </slide>
+    <slide>
+      <img src="../../assets/Images/home/Carousel_1.jpg" alt="second slide" class="carouselImage" style="display: block;">
+      <div class="carousel-caption d-none d-md-block">
+        <h3>Second slide label</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </div>
+    </slide>
+    <slide>
+      <img src="../../assets/Images/home/Carousel_3.jpg" alt="third slide" class="carouselImage" style="display: block;">
+      <div class="carousel-caption d-none d-md-block">
+        <h3>Third slide label</h3>
+        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+      </div>
+    </slide>
+  </carousel>
+
+
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+
+  <div class="container marketing" id="features" #features>
+    <!-- START THE FEATURETTES -->
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It’ll blow your mind.</span></h2>
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+      </div>
+      <div class="col-md-5">
+        <img src="../../assets/Images/home/Feature_1.jpg" alt="second slide" style="display: block; width: 100%;">
+        <!-- <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 500x500"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg> -->
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading">Oh yeah, it’s that good. <span class="text-muted">See for yourself.</span></h2>
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+      </div>
+      <div class="col-md-5 order-md-1">
+        <img src="../../assets/Images/home/Feature_2.jpg" alt="second slide" style="display: block; width: 100%;">
+        <!-- <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 500x500"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg> -->
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
+        <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+      </div>
+      <div class="col-md-5">
+        <img src="../../assets/Images/home/Feature_3.jpg" alt="second slide" style="display: block; width: 100%;">
+        <!-- <svg class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 500x500"><title>Placeholder</title><rect width="100%" height="100%" fill="#eee"/><text x="50%" y="50%" fill="#aaa" dy=".3em">500x500</text></svg> -->
+      </div>
+    </div>
+
+    <hr class="featurette-divider" id="aboutUs" #aboutUs>
+
+    <!-- /END THE FEATURETTES -->
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+      <div class="col-lg-4">
+        <i class="fa fa-coffee bd-placeholder-img rounded-circle fa-5x" aria-hidden="true"></i>
+        <!-- <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg> -->
+        <h2>Relax</h2>
+        <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+        <!-- <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p> -->
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <i class="fa fa-shopping-cart bd-placeholder-img rounded-circle fa-5x" aria-hidden="true"></i>
+        <h2>Easy Orders</h2>
+        <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
+        <!-- <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p> -->
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <i class="fa fa-line-chart bd-placeholder-img rounded-circle fa-5x" aria-hidden="true"></i>
+        <h2>Profit</h2>
+        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+        <!-- <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p> -->
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+    
+    <hr class="featurette-divider">
+
+  </div><!-- /.container -->
+
+
+  <!-- FOOTER -->
+  <footer class="container">
+    <p class="float-right"><a class="btn btn-link text-primary" (click) = "scrollTo(home,1)">Back to top</a></p>
+    <p>&copy; 2017-2020 Poshaque, Inc. &middot; <a target="_blank" href="https://www.instagram.com/poshaque.india"><i class="fa fa-instagram" aria-hidden="true"></i></a> </p> 
+    <!-- &middot; <a href="#">Terms</a> -->
+  </footer>
+</main>
