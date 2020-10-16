@@ -1,0 +1,37 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    color: #5a5a5a;
+}
+
+.logo-img{
+    width: 25px;
+}
+
+.pointer-cursor{
+    cursor: pointer;
+}
+
+.alertStyle {
+    position: fixed !important;
+    z-index: 99999999999 !important;
+    top: 104px;
+    right: 37px;
+}
+
+.moduleContainer {
+    background-color: white;
+    border: 1px solid #E4E4E4;
+    border-radius: 3px;
+    box-shadow: 4px 4px 7px #E4E4E4;
+    padding: 10px;
+    width: 96%;
+    margin-left: 2%;
+    margin-top: 2%;
+}
+
+.grey-color{
+    color: grey;
+}
