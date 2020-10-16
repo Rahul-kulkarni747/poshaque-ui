@@ -1,0 +1,6 @@
+<div class="alertStyle">
+	<div *ngFor="let alert of this.globalService.alerts">
+		<alert [type]="alert.type" class="shadow-lg" [dismissOnTimeout]="4000" [dismissible]="true" (onClosed)="this.globalService.onClosed(alert)">{{
+			alert.msg }}</alert>
+	</div>
+</div>
