@@ -19,11 +19,15 @@ export class GlobalService {
     }
     
 	showLoader() {
-		return this.loading = true;
+		setTimeout(() => {
+			return this.loading = true;
+		});
 	}
 
 	hideLoader() {
-		return this.loading = false;
+		setTimeout(() => {
+			return this.loading = false;
+		});
 	}
 
 	checkForErrors(res:Payload){
