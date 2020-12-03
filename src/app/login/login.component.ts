@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { HttpRequestService } from '../common/services/httprequest.service';
 import { Payload } from '../common/model/payload';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

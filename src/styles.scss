@@ -1,4 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
+:focus{
+    outline: none;
+}
 
 body {
     padding-top: 3rem;
@@ -14,6 +17,27 @@ body {
     cursor: pointer;
 }
 
+.carousel-control-next-icon, .carousel-control-prev-icon{
+    background-image: none;
+    background-color: black;
+    width: 25px;
+    border-radius: 50%;
+    height: 25px;
+    cursor: pointer;
+}
+
+.carousel-control-prev-icon:before{
+    content: "\f053";  /* this is your text. You can also use UTF-8 character codes as I do here */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+.carousel-control-next-icon:before{
+    content: "\f054";  /* this is your text. You can also use UTF-8 character codes as I do here */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
 .alertStyle {
     position: fixed !important;
     z-index: 99999999999 !important;
@@ -22,7 +46,7 @@ body {
 }
 
 .moduleContainer {
-    background-color: white;
+    background-color: #d0d0d05c;
     border: 1px solid #E4E4E4;
     border-radius: 3px;
     box-shadow: 4px 4px 7px #E4E4E4;

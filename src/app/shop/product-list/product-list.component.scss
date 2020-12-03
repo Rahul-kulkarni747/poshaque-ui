@@ -4,10 +4,16 @@
 }
 
 .product{
-    box-shadow: 1px 2px 6px #888888;
-    border: 0px;
+    // box-shadow: 1px 2px 6px #888888;
+    box-shadow: 4px 4px 7px #E4E4E4;
+    border-radius: 5%;
 }
 
 .product:hover{
-    box-shadow: 1px 2px 6px #f57a7a;
+    box-shadow: 4px 4px 7px #f57a7a;
+}
+
+.card-text {
+    height: 2.5rem;
+    line-height: 1;
 }
