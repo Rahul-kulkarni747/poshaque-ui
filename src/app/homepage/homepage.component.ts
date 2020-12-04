@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { GlobalService } from '../common/services/global.service';
 
 @Component({
   selector: 'app-homepage',
@@ -15,7 +16,7 @@ export class HomepageComponent implements OnInit {
   public featuresOffset: Number = null;
   public aboutUsOffset: Number = null;
 
-  constructor() { }
+  constructor(public globalService:GlobalService) { }
   
   ngOnInit() {
   }

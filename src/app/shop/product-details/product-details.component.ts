@@ -36,6 +36,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   reviewPageBody:any = {};
   routerSubs:Subscription;
   cartError = false;
+  productInCart = false;
 
   constructor(private route: ActivatedRoute,
     private httpService: HttpRequestService,
@@ -56,6 +57,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         this.selectedGender = '';
         this.categoryId = this.route.snapshot.paramMap.get('catid');
         this.productId = this.route.snapshot.paramMap.get('prodid');
+        this.cartError = false;
+        this.reviewError = false;
+        this.alreadyReviewed = false;
         this.getProductDetails();
       }
     })
@@ -75,7 +79,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         for (let i = 0; i < this.product.priceSizeJson.length; i++) {
           this.priceArray[this.product.priceSizeJson[i].size] = this.product.priceSizeJson[i].price;
         }
-
+      this.productInCart = this.globalService.cart.hasProduct(this.product.id+"_"+this.selectedGender+"_"+this.selectedSize);
       this.getProductReviews();
     })
   }
@@ -83,7 +87,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   getProductReviews(){
     this.globalService.showLoader();
     let paginationStr = this.globalService.constructPageUrl(this.pageNumber, "",
-      this.reviewsperpage, this.sortBy, this.sortOrder,true);
+                          this.reviewsperpage, this.sortBy, this.sortOrder,true);
     this.httpService.makeGetCall("reviews?id="+this.productId+paginationStr).subscribe((res: Payload) => {
       this.globalService.hideLoader();
       this.reviewPageBody = res.body;
@@ -91,8 +95,10 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   }
 
   sizeChanged(){
+    this.cartError = false;
     if(this.product.isPriceDifferent)
       this.price=this.priceArray[this.selectedSize];
+    this.productInCart = this.globalService.cart.hasProduct(this.product.id+"_"+this.selectedGender+"_"+this.selectedSize);
   }
   
   hoveringOver(value: number): void {
@@ -130,12 +136,30 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.routerSubs.unsubscribe();
   }
 
+  genderChanged(){
+    this.cartError = false;
+    this.productInCart = this.globalService.cart.hasProduct(this.product.id+"_"+this.selectedGender+"_"+this.selectedSize);
+  }
+
   addToCart(){
-    console.log(this.selectedGender,this.selectedSize)
     this.cartError = false;
     if((!this.product.genderSpecific || (this.product.genderSpecific && this.selectedGender != "")) && 
         (!this.product.hasSizes || (this.product.hasSizes && this.selectedSize != ""))){
-          this.globalService.cart.addProduct(this.product, this.price);
+          this.globalService.showLoader();
+          this.productInCart = true;
+          
+          this.globalService.cart.addProduct(this.product.id+"_"+this.selectedGender+"_"+this.selectedSize
+                    ,this.product, this.price,this.selectedSize,this.selectedGender);
+
+          this.httpService.makePostCall("cart",
+              { 
+                id:this.globalService.cart.id, 
+                data: JSON.stringify(this.globalService.cart)
+              }).subscribe((res:Payload)=>{
+                this.globalService.hideLoader();
+                this.globalService.cart = res.body.id;
+                this.globalService.addAlert("success","Cart Updated");
+              });
     }else{
       this.cartError = true;
     }

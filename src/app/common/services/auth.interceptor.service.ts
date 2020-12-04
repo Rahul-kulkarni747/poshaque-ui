@@ -25,6 +25,8 @@ export class TokenInterceptor implements HttpInterceptor {
           if (err.error.body.error == "Unauthorized") {
             this.globalService.addAlert("danger", "Session Expired");
             this.router.navigate(['login']);
+            localStorage.clear();
+            this.globalService.userAuth.init();
           }
           else {
             this.globalService.addAlert("danger", "Servers are unreachable. Try again later.");

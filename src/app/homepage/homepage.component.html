@@ -16,11 +16,15 @@
           <a class="nav-link" (click) = "scrollTo(aboutUs,3)" tabindex="-1">About us</a>
         </li>
       </ul>
-      <form class="form-inline mt-2 mt-md-0">
+      <form class="form-inline mt-2 mt-md-0" *ngIf="!this.globalService.userAuth.isTokenValid()">
         <button class="btn btn-primary my-2 my-sm-0" type="button" [routerLink]="['../login']">Sign In</button>
       </form>
+      <form class="form-inline mt-2 mt-md-0" *ngIf="this.globalService.userAuth.isTokenValid()">
+        <button class="btn btn-primary my-2 my-sm-0" type="button" [routerLink]="['../shop']">Shop</button>
+      </form>
     </div>
-    <button class="btn btn-primary my-2 my-sm-0 d-md-none" type="button" [routerLink]="['../login']">Sign In</button>
+    <button class="btn btn-primary my-2 my-sm-0 d-md-none" *ngIf="!this.globalService.userAuth.isTokenValid()" type="button" [routerLink]="['../login']">Sign In</button>
+    <button class="btn btn-primary my-2 my-sm-0 d-md-none" *ngIf="this.globalService.userAuth.isTokenValid()" type="button" [routerLink]="['../shop']">Shop</button>
   </nav>
 </header>
 

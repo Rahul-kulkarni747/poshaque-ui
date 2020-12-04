@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Payload } from '../model/payload';
 import { AlertComponent } from 'ngx-bootstrap/alert/public_api';
-import { cart } from '../model/cart';
+import { Cart } from '../model/cart';
+import { userAuth } from '../model/userAuth';
 
 @Injectable({
 	providedIn: 'root'
@@ -9,7 +10,12 @@ import { cart } from '../model/cart';
 export class GlobalService {
 	alerts: any[] = [];
     loading = false;
-	cart: cart;
+	cart: Cart = new Cart();
+	userAuth :userAuth = new userAuth();
+
+	constructor(){
+		this.userAuth.init();
+	}
 	
     addAlert(type: string, message: string): void {
 		// primary, secondary, success, danger, warning, info, light, dark

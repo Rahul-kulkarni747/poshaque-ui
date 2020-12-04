@@ -27,7 +27,7 @@
                 <h5>Available Gender Options</h5>
                 <div class="d-flex">
                     <label class="radio-container  radio-box-height">
-                        <input type="radio" name="gender" [(ngModel)]="selectedGender" value="M">
+                        <input type="radio" name="gender" [(ngModel)]="selectedGender" value="M" (change)="genderChanged()">
                         <span class="checkmark d-flex justify-content-center align-items-center">
                             <!-- <div class="postion-relative"> -->
                                 <span class="radio-text">M</span>
@@ -35,7 +35,7 @@
                         </span>
                     </label>
                     <label class="radio-container  radio-box-height">
-                        <input type="radio" name="gender"  [(ngModel)]="selectedGender" value="F">
+                        <input type="radio" name="gender"  [(ngModel)]="selectedGender" value="F" (change)="genderChanged()">
                         <span class="checkmark d-flex justify-content-center align-items-center">
                             <!-- <div class="postion-relative"> -->
                                 <span  class="radio-text">F</span>
@@ -68,7 +68,8 @@
             </div>
             <div class="mt-1">
                 <button type="button" class="btn btn-success" (click)="addToCart()"><i class="fas fa-cart-plus mx-1" ></i> Add to cart</button>
-                <div class="text-danger" *ngIf="cartError">Select before adding.</div>
+                <div class="badge badge-danger ml-2" *ngIf="cartError"> <i class="fas fa-exclamation-circle"></i> Select available options before adding.</div>
+                <div class="badge badge-warning ml-2" *ngIf="productInCart"><i class="fas fa-info-circle"></i> Product in cart. Adding would increase the quantity.</div>
             </div>
         </div>
     </div>
@@ -116,8 +117,8 @@
                 </div>
                 <div class="col-12 col-md-8">
                     <textarea class="form-control"  [disabled]="alreadyReviewed" [(ngModel)]="enteredReview.reviewDescription" placeholder="Enter your review" maxlength="300"></textarea>
-                    <small *ngIf="reviewError" class="text-danger">
-                        Please enter 10 or more characters.
+                    <small *ngIf="reviewError" class="badge badge-danger">
+                        <i class="fas fa-exclamation-circle"></i> Please enter 10 or more characters.
                     </small>
                 </div>
                 <div class="col-md-2 d-flex align-items-center mt-2">
@@ -125,7 +126,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center">
-                <small class="text-danger" *ngIf="alreadyReviewed"> You've already reviewed. Thanks for your valuable feedback.</small>
+                <small class="badge badge-danger mt-1" *ngIf="alreadyReviewed"><i class="fas fa-exclamation-circle"></i> You've already reviewed. Thanks for your valuable feedback.</small>
             </div>
             <div *ngIf="reviewPageBody.content == undefined || reviewPageBody?.content.length == 0">
                 <div class="mt-2 d-flex justify-content-center text-muted">
