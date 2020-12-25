@@ -3,6 +3,7 @@ import { Payload } from '../model/payload';
 import { AlertComponent } from 'ngx-bootstrap/alert/public_api';
 import { Cart } from '../model/cart';
 import { userAuth } from '../model/userAuth';
+import { HttpRequestService } from './httprequest.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -13,7 +14,7 @@ export class GlobalService {
 	cart: Cart = new Cart();
 	userAuth :userAuth = new userAuth();
 
-	constructor(){
+	constructor(private httpService:HttpRequestService){
 		this.userAuth.init();
 	}
 	
@@ -22,7 +23,7 @@ export class GlobalService {
 		this.alerts.push({
 			type: type,
 			msg: message,
-			timeout: 2000
+			timeout: 20000
 		});
     }
     
@@ -62,6 +63,19 @@ export class GlobalService {
 		if(typeof orderBy !== "undefined")
 			str +="&orderBy="+orderBy;
 		return str;
+	}
+
+	saveCartDetails(){
+		this.showLoader();
+		this.httpService.makePostCall("cart",
+		  { 
+			id:this.cart.id, 
+			data: JSON.stringify(this.cart)
+		  }).subscribe((res:Payload)=>{
+			this.hideLoader();
+			this.cart.id = res.body.id;
+			this.addAlert("success","Cart Updated");
+		});
 	}
     
 }

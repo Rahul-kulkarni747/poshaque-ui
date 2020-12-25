@@ -19,4 +19,8 @@ export class HttpRequestService {
     return this.http.post(this.backendUrl+url,object);
   }
 
+  makeDeleteCall(url){
+    return this.http.delete(this.backendUrl+url);
+  }
+
 }

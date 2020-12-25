@@ -2,35 +2,35 @@
   <h5 class="grey-color"><span class="pointer-cursor text-info p-0" routerLink="../../home"> <i class="fas fa-arrow-left"></i> Categories</span> | Products</h5>
   <p>Range of products that you can browse.</p>
   <hr class="my-4">
-  <div class="row px-3">
-    <div class="col-sm-12 col-md-8">
-        <label for="searchProduct" class="font-weight-bold">Search Products</label>
-        <input id="searchProduct" type="text" class="form-control" [(ngModel)]="searchTerm" (keyup)="searchForProducts()" name="searchProduct" placeholder="Search">
-        <small class="badge badge-danger" *ngIf="searchErrorMessage.length>0"><i class="fas fa-exclamation-circle"></i> {{searchErrorMessage}}</small>
-    </div>
-    <div class="col-6 col-md-2">
-      <label for="sortSelect" class="font-weight-bold ">Sort By</label>
-      <select class="form-control" id="sortSelect" [(ngModel)]="sortSelect" name="sort" (change)="sortChange()">
-        <option value="name_ASC" selected>Alphabetical A-Z</option>
-        <option value="name_DESC">Alphabetical Z-A</option>
-        <option value="createdOn_DESC">Newest First</option>
-        <option value="createdOn_ASC">Oldest First</option>
-        <option value="price_DESC">Price high to low</option>
-        <option value="price_ASC">Price low to high</option>
-      </select>
-    </div>
-    <div class="col-6 col-md-2">
-      <label for="sortSelect" class="font-weight-bold ">Products per page</label>
-      <select class="form-control" name="productspp" [(ngModel)]="productsperpage" id="sortSelect" (change)="productsChanged()">
-        <option>8</option>
-        <option>16</option>
-        <option>32</option>
-        <option>64</option>
-      </select>
-    </div>
+  <div class="row box-container m-1 p-3">
+      <div class="col-sm-12 col-md-8">
+          <label for="searchProduct" class="font-weight-bold">Search Products</label>
+          <input id="searchProduct" type="text" class="form-control" [(ngModel)]="searchTerm" (keyup)="searchForProducts()" name="searchProduct" placeholder="Search">
+          <small class="badge badge-danger" *ngIf="searchErrorMessage.length>0"><i class="fas fa-exclamation-circle"></i> {{searchErrorMessage}}</small>
+      </div>
+      <div class="col-6 col-md-2">
+        <label for="sortSelect" class="font-weight-bold ">Sort By</label>
+        <select class="form-control" id="sortSelect" [(ngModel)]="sortSelect" name="sort" (change)="sortChange()">
+          <option value="name_ASC" selected>Alphabetical A-Z</option>
+          <option value="name_DESC">Alphabetical Z-A</option>
+          <option value="createdOn_DESC">Newest First</option>
+          <option value="createdOn_ASC">Oldest First</option>
+          <option value="price_DESC">Price high to low</option>
+          <option value="price_ASC">Price low to high</option>
+        </select>
+      </div>
+      <div class="col-6 col-md-2">
+        <label for="sortSelect" class="font-weight-bold ">Products per page</label>
+        <select class="form-control" name="productspp" [(ngModel)]="productsperpage" id="sortSelect" (change)="productsChanged()">
+          <option>8</option>
+          <option>16</option>
+          <option>32</option>
+          <option>64</option>
+        </select>
+      </div>
   </div>
-  <div class="p-4">
-    <div class="row mt-4">
+  <div class="px-3">
+    <div class="row">
       <div class="col-12 col-sm-12 col-md-4 col-lg-3 mt-4" *ngFor="let product of productList">
         <div class="card position-relative pointer-cursor product" >
           <div class="p-3 pb-1">
@@ -39,7 +39,7 @@
               <div class="">
                 <div class="card-text font-weight-bold">{{product.name}}</div>
                 <div class="d-flex justify-content-between align-items-center">
-                  <div class="grey-color"><i class="fas fa-rupee-sign"></i>&nbsp;<span class="font-weight-bold">{{product.price}}</span></div>
+                  <h5 class="grey-color"><i class="fas fa-rupee-sign"></i>&nbsp;<span class="font-weight-bold">{{product.price}}</span></h5>
                   <button class="btn btn-primary btn-sm" routerLink="./product-details/{{product.id}}">Details</button>  
                 </div>
                 <!-- <button class="btn  btn-outline-success"><i class="fas fa-cart-plus"></i></button> -->
@@ -55,9 +55,9 @@
       </div>
     </div>
   </div>
-  <div class="m-2 mx-4 d-flex align-items-center justify-content-between grey-color">
-    <span class="">Showing {{page.numberOfElements}} of {{page.totalElements}} products</span>
-    <span class="">
+  <div class="m-2 mx-4 d-md-flex align-items-center justify-content-between grey-color">
+    <div class="font-italic d-flex justify-content-center d-md-block">Showing {{page.numberOfElements}} of {{page.totalElements}} products</div>
+    <span class="mt-2 d-flex justify-content-center d-md-block">
       <button class="btn btn-outline-secondary btn-sm" [disabled]="page.first" (click)="prevPage()"><i class="fas fa-arrow-left"></i> Previous</button>
       <span class="mx-2">{{page.number+1}} / {{page.totalPages}}</span>
       <button class="btn btn-outline-secondary btn-sm" [disabled]="page.last" (click)="nextPage()"> Next <i class="fas fa-arrow-right"></i> </button>

@@ -1,0 +1,197 @@
+<div class="moduleContainer">
+    <h5 class="grey-color"> <span class="pointer-cursor text-info p-0" routerLink="../"> <i
+        class="fas fa-arrow-left"></i> Shop</span> | Your Shopping Cart</h5>
+    <hr class="my-4">
+    <div class="row">
+        <div class="col-12 col-md-6 mt-2">
+            <div class="cart-box p-4 p-tab-3 p-mob-2">
+                <h5 class="font-weight-bold"><i class="fa fa-shopping-cart mr-2" aria-hidden="true"></i>Cart Details</h5>
+                <div class="d-flex justify-content-center align-items-center" *ngIf="this.globalService.cart.productIndexes.length == 0">
+                    <b>No Products Added. Shop Now.</b>
+                </div>
+                <div class="my-3" *ngFor="let prod of this.globalService.cart.productIndexes; let i = index">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <div class="d-flex ">
+                                <div class="prod-thumbnail">
+                                    <img class="prod-image card-img-top cart-img" [src]="getImage(this.globalService.cart.products[this.globalService.cart.productIndexes[i]].id)" alt="Card image cap">
+                                </div>
+                            </div>
+                            <div >
+                                <div class="pointer-cursor zoom-on-hover" routerLink="../products/{{this.globalService.cart.products[this.globalService.cart.productIndexes[i]].categoryId}}/product-details/{{this.globalService.cart.products[this.globalService.cart.productIndexes[i]].id}}"><b>{{this.globalService.cart.products[this.globalService.cart.productIndexes[i]].name}}</b></div>
+                                <div *ngIf="this.globalService.cart.products[this.globalService.cart.productIndexes[i]].hasSizes">Size : {{this.globalService.cart.products[this.globalService.cart.productIndexes[i]].size}}</div>
+                                <div *ngIf="this.globalService.cart.products[this.globalService.cart.productIndexes[i]].isGenderSpecific">Gender : {{this.globalService.cart.products[this.globalService.cart.productIndexes[i]].gender}}</div>
+                                <div>Quantity : 
+                                    <span class="pointer-cursor p-2" tooltip="Decrease Quantity" (click)="decreaseQuantity(this.globalService.cart.products[this.globalService.cart.productIndexes[i]])">
+                                        <i class="fas fa-minus-circle text-warning"></i>
+                                    </span>  
+                                    <span class="">
+                                        {{this.globalService.cart.products[this.globalService.cart.productIndexes[i]].quantity}}
+                                    </span>
+                                    <span class="pointer-cursor p-2" tooltip="Increase Quantity" (click)="increaseQuantity(this.globalService.cart.products[this.globalService.cart.productIndexes[i]])">
+                                        <i class="fas fa-plus-circle text-success pointer-cursor"></i> 
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="font-weight-bold d-flex align-items-center">
+                            <span class="p-2">
+                                {{this.globalService.cart.products[this.globalService.cart.productIndexes[i]].price * this.globalService.cart.products[this.globalService.cart.productIndexes[i]].quantity}} 
+                            </span>
+                            <!-- <span class="p-2 pointer-cursor" ><i class="fas fa-eye"></i></span> -->
+                            <span class="p-2 pointer-cursor"  tooltip="Remove Product" (click)="deleteProductFromCart(this.globalService.cart.productIndexes[i])"><i class="fas fa-times text-danger"></i></span>
+                        </div>
+                    </div>
+                    <hr *ngIf="i != (this.globalService.cart.productIndexes.length-1)" class="w-5 border-top">
+                </div>
+                <!-- <div class="d-flex justify-content-end"*ngIf="this.globalService.cart.productIndexes.length != 0">
+                    <h4 class="font-weight-bold">Total: {{this.globalService.cart.totalAmount}}</h4>
+                </div> -->
+            </div>
+        </div>
+        <div class="col-12 col-md-6 mt-2">
+            <div class="cart-box p-4">
+                <h5 class="font-weight-bold mb-3"><i class="fas fa-map-marker-alt mr-2"></i>Select Address</h5>
+                <div *ngFor="let addedaddress of addresses; let i = index">
+                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="address_{{i}}" name="address" class="custom-control-input">
+                        <label class="custom-control-label" for="address_{{i}}">
+                            {{addedaddress.addressLine1}}, <br>{{addedaddress.addressLine2}}, {{addedaddress.landmark}}, <br>{{addedaddress.city}}, {{addedaddress.state}} - {{addedaddress.zip}}
+                        </label>
+                    </div>
+                    <div class="font-weight-bold d-flex align-items-center" *ngIf = "!showAddressForm">
+                        <span class="p-2 pointer-cursor" (click)="editAddress(addedaddress,i)"  tooltip="Edit Address"><i class="fas fa-edit"></i></span>
+                        <span class="p-2 pointer-cursor" (click)="removeAddress(addedaddress,i)" tooltip="Remove Address"><i class="fas fa-times text-danger"></i></span>
+                    </div>
+                    </div>
+                    <hr *ngIf="i != (addresses.length-1)" class="w-5 border-top">
+                </div>
+                <div class="mt-3 d-flex justify-content-center"  *ngIf = "!showAddressForm">
+                    <button class="btn btn-primary btn-sm" (click)="showAddress()"> Add Address </button>
+                </div>
+                <div  *ngIf = "showAddressForm"> 
+                    <div class="d-flex justify-content-center">
+                        <hr *ngIf="i != (addresses.length-1)" class="w-5 border-top mx-2">
+                    </div>
+                    <form #addressForm="ngForm" (ngSubmit)="addressForm.form.valid && addAddress()">
+                    <div class="form-group mt-2">
+                        <label for="inputAddress" class="font-weight-bold">Address 1</label>
+                        <input type="text" [(ngModel)]="address.addressLine1" maxlength="50" class="form-control" required
+                        name="inputAddress" #addr1="ngModel" id="inputAddress" placeholder="Enter Address 1">
+                        <small *ngIf="addr1.invalid && addressForm.submitted" class="badge badge-danger mt-1 ml-1">
+                        <div *ngIf="addr1.errors.required" class="">
+                            <i class="fas fa-exclamation-circle"></i>  Address 1 is required.
+                        </div>
+                        <div *ngIf="addr1.errors.pattern">
+                            <i class="fas fa-exclamation-circle"></i> Address 1 is invalid.
+                        </div>
+                    </small>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-9">
+                        <label for="inputAddress2" class="font-weight-bold">Address 2</label>
+                        <input type="text" class="form-control" maxlength="50" [(ngModel)]="address.addressLine2" required
+                        name="inputAddress2" #addr2="ngModel" id="inputAddress2" placeholder="Enter Address 2">
+                        <small *ngIf="addr2.invalid && addressForm.submitted" class="badge badge-danger mt-1 ml-1">
+                            <div *ngIf="addr2.errors.required" class="">
+                            <i class="fas fa-exclamation-circle"></i> Address 2 is required.
+                            </div>
+                            <div *ngIf="addr2.errors.pattern">
+                            <i class="fas fa-exclamation-circle"></i> Address 2 is invalid.
+                            </div>
+                        </small>
+                        </div>
+                        <div class="form-group col-md-3">
+                        <label for="inputAddress2" class="font-weight-bold">Landmark</label>
+                        <input type="text" #landmark="ngModel" maxlength="20" class="form-control" [(ngModel)]="address.landmark" required
+                        name="landmark" id="landmark" placeholder="Enter Landmark">
+                        <small *ngIf="landmark.invalid && addressForm.submitted" class="badge badge-danger mt-1 ml-1">
+                            <div *ngIf="landmark.errors.required" class="">
+                            <i class="fas fa-exclamation-circle"></i>  Landmark is required.
+                            </div>
+                            <div *ngIf="landmark.errors.pattern">
+                            <i class="fas fa-exclamation-circle"></i>  Landmark is invalid.
+                            </div>
+                        </small>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                        <label for="inputCity" class="font-weight-bold">City</label>
+                        <input type="text" class="form-control" maxlength="20" name="inputCity" id="inputCity" required
+                        [(ngModel)]="address.city" #city="ngModel" placeholder="Enter City">
+                        <small *ngIf="city.invalid && addressForm.submitted" class="badge badge-danger mt-1 ml-1">
+                            <div *ngIf="city.errors.required" class="">
+                            <i class="fas fa-exclamation-circle"></i> City is required.
+                            </div>
+                            <div *ngIf="city.errors.pattern">
+                            <i class="fas fa-exclamation-circle"></i> City is invalid.
+                            </div>
+                        </small>
+                        </div>
+                        <div class="form-group col-md-4">
+                        <label for="inputState" class="font-weight-bold">State</label>
+                        <input type="text" class="form-control" name="inputState" id="inputState" required
+                        [(ngModel)]="address.state" #state="ngModel"  maxlength="20" placeholder="Enter State">
+                        <small *ngIf="state.invalid && addressForm.submitted" class="badge badge-danger mt-1 ml-1">
+                            <div *ngIf="state.errors.required" class="">
+                            <i class="fas fa-exclamation-circle"></i> State is required.
+                            </div>
+                            <div *ngIf="state.errors.pattern">
+                            <i class="fas fa-exclamation-circle"></i> State is invalid.
+                            </div>
+                        </small>
+                        </div>
+                        <div class="form-group col-md-2">
+                        <label for="inputZip" class="font-weight-bold">Zip</label>
+                        <input type="text" class="form-control" name="inputZip" id="inputZip" required
+                        [(ngModel)]="address.zip" #zip="ngModel" maxlength="10" placeholder="Enter Zip">
+                        <small *ngIf="zip.invalid && addressForm.submitted" class="badge badge-danger mt-1 ml-1">
+                            <div *ngIf="zip.errors.required">
+                            <i class="fas fa-exclamation-circle"></i> Zip is required.
+                            </div>
+                            <div *ngIf="zip.errors.pattern">
+                            <i class="fas fa-exclamation-circle"></i> Zip is invalid.
+                            </div>
+                        </small>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-sm btn-danger"  (click)="cancelClicked()">Cancel</button>&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-sm btn-success">Save</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="cart-box p-4 mt-3">
+                <div class="d-flex justify-content-center">
+                    <b class="mr-2">Amount Payable: </b>{{this.globalService.cart.totalAmount}}
+                </div>
+                <div class="d-flex justify-content-center mt-2">
+                    <button class="btn btn-success mt-2" [disabled]="this.globalService.cart.totalAmount == 0"><i class="fas fa-dolly mr-2"></i> Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #deletefromcart>
+    <div class="modal-body">
+      Are you sure you want to delete the product from cart?
+      <div class="mt-2 d-flex justify-content-center">
+        <button class="btn btn-danger btn-sm w-25" (click)="modelRef.hide()">Cancel</button>
+        <button class="btn btn-success btn-sm ml-2 w-25" (click)="deleteProduct()">Yes</button>
+      </div>
+    </div>
+</ng-template>
+
+<ng-template #deleteAddr>
+    <div class="modal-body">
+      Are you sure you want to delete the address?
+      <div class="mt-2 d-flex justify-content-center">
+        <button class="btn btn-danger btn-sm w-25" (click)="modelRef.hide()">Cancel</button>
+        <button class="btn btn-success btn-sm ml-2 w-25" (click)="deleteAddress()">Yes</button>
+      </div>
+    </div>
+</ng-template>

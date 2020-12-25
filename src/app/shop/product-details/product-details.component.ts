@@ -79,6 +79,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         for (let i = 0; i < this.product.priceSizeJson.length; i++) {
           this.priceArray[this.product.priceSizeJson[i].size] = this.product.priceSizeJson[i].price;
         }
+      else
+        this.price = this.product.price;
       this.productInCart = this.globalService.cart.hasProduct(this.product.id+"_"+this.selectedGender+"_"+this.selectedSize);
       this.getProductReviews();
     })
@@ -145,21 +147,12 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     this.cartError = false;
     if((!this.product.genderSpecific || (this.product.genderSpecific && this.selectedGender != "")) && 
         (!this.product.hasSizes || (this.product.hasSizes && this.selectedSize != ""))){
-          this.globalService.showLoader();
           this.productInCart = true;
           
           this.globalService.cart.addProduct(this.product.id+"_"+this.selectedGender+"_"+this.selectedSize
                     ,this.product, this.price,this.selectedSize,this.selectedGender);
-
-          this.httpService.makePostCall("cart",
-              { 
-                id:this.globalService.cart.id, 
-                data: JSON.stringify(this.globalService.cart)
-              }).subscribe((res:Payload)=>{
-                this.globalService.hideLoader();
-                this.globalService.cart = res.body.id;
-                this.globalService.addAlert("success","Cart Updated");
-              });
+          
+          this.globalService.saveCartDetails();
     }else{
       this.cartError = true;
     }

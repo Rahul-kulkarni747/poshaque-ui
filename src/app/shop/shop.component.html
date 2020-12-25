@@ -4,9 +4,9 @@
       <img src="../../assets/Images/logo/apple-touch-icon.png" class="logo-img  pb-2"/>&nbsp;<a class="navbar-brand text-white">oshaque</a>
     </div>
     <div class="form-inline mt-2 mt-md-0">
-      <div class="position-relative mx-2 ">
+      <div class="position-relative mx-2 " routerLink="cart">
         <i class="fa fa-shopping-cart fa-2x text-white pointer-cursor" aria-hidden="true"></i>
-        <span class="position-absolute badge badge-primary">{{this.globalService.cart.productIndexes?.length}}</span>
+        <span class="position-absolute badge badge-primary">{{this.globalService.cart.productIndexes.length}}</span>
       </div>
       <div class="position-relative">
         <div #toggleButton (click)="showMenu()">

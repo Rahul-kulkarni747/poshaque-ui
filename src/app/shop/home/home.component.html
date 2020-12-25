@@ -33,7 +33,7 @@
   <div class="row mt-4">
 
     <div class="col-6 col-sm-6 col-md-4 col-lg-3" *ngFor="let category of categories">
-      <div class="card position-relative pointer-cursor category text-center"  routerLink="../products/{{category.id}}">
+      <div class="card position-relative pointer-cursor category text-center mt-3 mt-md-0"  routerLink="../products/{{category.id}}">
         <span  *ngFor="let bullet of category.bullets" class="position-absolute badge {{bullet.class}}">{{bullet.value}}</span>
         <div class="p-3">
           <div class="categoryicon" *ngIf="category.iconType ==  'font-awesome-icon'">
@@ -44,7 +44,7 @@
       </div>
     </div>
     <div class="col-6 col-sm-6 col-md-4 col-lg-3">
-      <div class="card position-relative pointer-cursor category text-center"  routerLink="../products/0">
+      <div class="card position-relative pointer-cursor category text-center mt-3 mt-md-0"  routerLink="../products/0">
         <div class="p-3">
           <div class="categoryicon">
             <i class="fas fa-infinity fa-4x"></i>

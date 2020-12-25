@@ -113,3 +113,43 @@
   .review-line-height{
     line-height: 1px;
   }
+
+  @media screen and (max-width: 767px) {
+    .pr-m-1{
+      padding-right: .25rem!important;
+    }
+    
+    .pl-m-1{
+      padding-left: .25rem!important;
+    }
+
+    .tab-stars{
+      justify-content: center !important;
+    }
+
+    .review-submit{
+      justify-content: center !important;
+    }
+  }
+  
+  @media screen and (min-width:768px) and (max-width: 1150px) {
+    .pr-m-1{
+      padding-left: 0.2rem !important;
+      padding-right: 0.2rem !important;
+    }
+    
+    .pl-m-1{
+      padding-left: 0.2rem !important;
+      padding-right: 0.2rem !important;
+    }
+
+    .tab-heading{
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .tab-stars{
+      font-size: 0.8rem;
+      padding: 0;
+    }
+  }

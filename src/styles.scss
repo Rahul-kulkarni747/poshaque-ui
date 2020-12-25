@@ -41,8 +41,8 @@ body {
 .alertStyle {
     position: fixed !important;
     z-index: 99999999999 !important;
-    top: 104px;
-    right: 37px;
+    top: 65px;
+    right: 25px;
 }
 
 .moduleContainer {
@@ -58,4 +58,18 @@ body {
 
 .grey-color{
     color: grey;
+}
+
+.zoom-on-hover{
+    transition: transform .3s;
+}
+
+.zoom-on-hover:hover{
+    transform: scale(1.1);
+}
+
+.box-container{
+    // box-shadow: 1px 2px 6px #f38585;
+    border-radius: 2%;
+    background-color: white;
 }
