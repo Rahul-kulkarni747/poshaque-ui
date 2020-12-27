@@ -169,7 +169,7 @@
                     <b class="mr-2">Amount Payable: </b>{{this.globalService.cart.totalAmount}}
                 </div>
                 <div class="d-flex justify-content-center mt-2">
-                    <button class="btn btn-success mt-2" [disabled]="this.globalService.cart.totalAmount == 0"><i class="fas fa-dolly mr-2"></i> Checkout</button>
+                    <button class="btn btn-success mt-2" [disabled]="this.globalService.cart.totalAmount == 0" (click)="payAmount()"><i class="fas fa-dolly mr-2"></i> Checkout</button>
                 </div>
             </div>
         </div>

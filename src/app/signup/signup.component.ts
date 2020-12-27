@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { HttpRequestService } from '../common/services/httprequest.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Router } from '@angular/router';
@@ -23,7 +23,7 @@ export class SignupComponent implements OnInit {
   showPasswordError:any = false;
   showAddressError:any = false;
   modalRef: BsModalRef;
-  @ViewChild('confirmPin') confirmPinModal: BsModalRef;
+  @ViewChild('confirmPin') confirmPinModal: TemplateRef<any>;
 
   ngOnInit() {
     this.listOfAddress = [];
