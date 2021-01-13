@@ -1,4 +1,5 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Payload } from 'src/app/common/model/payload';
 import { GlobalService } from 'src/app/common/services/global.service';
@@ -23,11 +24,15 @@ export class CartComponent implements OnInit {
   removeAddrIndex = -1;
   selectedAddressId = -1;
   productImages = [];
+  addressId = 0;
+  selectAddressError = false;
 
   constructor(private modalService: BsModalService,
               public globalService:GlobalService, 
               private httpService:HttpRequestService,
-              private winRef: WindowRefService) { }
+              private winRef: WindowRefService,
+              private router:Router,
+              private zone: NgZone) { }
 
   ngOnInit(): void {
     this.getUserAddress();
@@ -130,19 +135,30 @@ export class CartComponent implements OnInit {
   }
 
   payAmount(){
-    
-    // call api to create order_id
-    this.payWithRazor("12354");
+    this.selectAddressError = false;
+    if(this.addressId == 0){
+      this.selectAddressError = true;
+    }else{
+      this.globalService.showLoader();
+      this.httpService.makeGetCall("payment/orders?addressId="+this.addressId).subscribe(
+        (res:Payload)=>{
+          this.globalService.hideLoader();
+          if(res.hasError)
+            this.globalService.addAlert("danger",res.errorMessage);
+          else
+            this.payWithRazor(res.body.id,res.body.amount_due);
+        });
+    }
   }
 
-  payWithRazor(val) {
+  payWithRazor(val,amount) {
     const options: any = {
       key: 'rzp_test_1eo3r4LGkOpo75',
-      amount: 125500, // amount should be in paise format to display Rs 1255 without decimal point
+      amount: amount, // amount should be in paise format to display Rs 1255 without decimal point
       currency: 'INR',
       name: '', // company name or product name
       description: '',  // product description
-      image: '../../../assets/logo/apple-touch-icon.png', // company logo or product image
+      image: '../../../assets/Images/logo/apple-touch-icon.png', // company logo or product image
       order_id: val, // order_id created by you in backend
       modal: {
         // We should prevent closing of the form when esc key is pressed.
@@ -157,13 +173,31 @@ export class CartComponent implements OnInit {
     };
     options.handler = ((response, error) => {
       options.response = response;
-      console.log(response);
-      console.log(options);
+      let obj:any = {};
+      obj.order_id = response.razorpay_order_id;
+      obj.sign_id = response.razorpay_signature;
+      obj.payment_id = response.razorpay_payment_id;
+      obj.status = true;
+      this.globalService.showLoader();
+      this.httpService.makePostCall("payment/orders",obj).subscribe((res:Payload) => {
+        this.globalService.hideLoader();
+        this.globalService.addAlert("success","Transaction Success");
+        this.globalService.paymentDone = true;
+        this.zone.run(() => {
+          this.router.navigate(['./thank-you']);
+        });
+      });
       // call your backend api to verify payment signature & capture transaction
     });
     options.modal.ondismiss = (() => {
-      // handle the case when user closes the form while transaction is in progress
-      console.log('Transaction cancelled.');
+      let obj:any = {};
+      obj.status = false;
+      obj.order_id = val;
+      this.globalService.showLoader();
+      this.httpService.makePostCall("payment/orders",obj).subscribe((res:Payload) => {
+        this.globalService.hideLoader();
+        this.globalService.addAlert("danger","Transaction Cancelled.");
+      });
     });
     const rzp = new this.winRef.nativeWindow.Razorpay(options);
     rzp.open();

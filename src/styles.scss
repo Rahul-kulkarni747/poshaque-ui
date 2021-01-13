@@ -73,3 +73,18 @@ body {
     border-radius: 2%;
     background-color: white;
 }
+
+.form-control{
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 0%;
+}
+
+
+.form-control:focus{
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    box-shadow: none;
+}

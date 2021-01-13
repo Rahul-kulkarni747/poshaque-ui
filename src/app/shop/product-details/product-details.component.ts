@@ -118,6 +118,9 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
       this.reviewError = false;
       this.enteredReview.productId = this.productId;
       this.httpService.makePostCall("reviews",this.enteredReview).subscribe((res:Payload)=>{
+        this.enteredReview = {};
+        this.alreadyReviewed = true;
+        this.getProductReviews();
         this.globalService.hideLoader();
       })
     }else

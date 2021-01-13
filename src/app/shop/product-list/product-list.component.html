@@ -3,12 +3,12 @@
   <p>Range of products that you can browse.</p>
   <hr class="my-4">
   <div class="row box-container m-1 p-3">
-      <div class="col-sm-12 col-md-8">
+      <div class="col-sm-12 col-md-8 mt-2">
           <label for="searchProduct" class="font-weight-bold">Search Products</label>
           <input id="searchProduct" type="text" class="form-control" [(ngModel)]="searchTerm" (keyup)="searchForProducts()" name="searchProduct" placeholder="Search">
           <small class="badge badge-danger" *ngIf="searchErrorMessage.length>0"><i class="fas fa-exclamation-circle"></i> {{searchErrorMessage}}</small>
       </div>
-      <div class="col-6 col-md-2">
+      <div class="col-6 col-md-2 mt-2">
         <label for="sortSelect" class="font-weight-bold ">Sort By</label>
         <select class="form-control" id="sortSelect" [(ngModel)]="sortSelect" name="sort" (change)="sortChange()">
           <option value="name_ASC" selected>Alphabetical A-Z</option>
@@ -19,8 +19,8 @@
           <option value="price_ASC">Price low to high</option>
         </select>
       </div>
-      <div class="col-6 col-md-2">
-        <label for="sortSelect" class="font-weight-bold ">Products per page</label>
+      <div class="col-6 col-md-2 mt-2">
+        <label for="sortSelect" class="font-weight-bold ">Showing</label>
         <select class="form-control" name="productspp" [(ngModel)]="productsperpage" id="sortSelect" (change)="productsChanged()">
           <option>8</option>
           <option>16</option>
@@ -39,7 +39,7 @@
               <div class="">
                 <div class="card-text font-weight-bold">{{product.name}}</div>
                 <div class="d-flex justify-content-between align-items-center">
-                  <h5 class="grey-color"><i class="fas fa-rupee-sign"></i>&nbsp;<span class="font-weight-bold">{{product.price}}</span></h5>
+                  <span class="grey-color"><i class="fas fa-rupee-sign"></i>&nbsp;<span class="font-weight-bold">{{product.price}}</span></span>
                   <button class="btn btn-primary btn-sm" routerLink="./product-details/{{product.id}}">Details</button>  
                 </div>
                 <!-- <button class="btn  btn-outline-success"><i class="fas fa-cart-plus"></i></button> -->

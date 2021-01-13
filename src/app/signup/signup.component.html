@@ -206,7 +206,7 @@
                   <div class="form-group col-md-2">
                     <label for="inputZip" class="font-weight-bold">Zip</label>
                     <input type="text" class="form-control" name="inputZip" id="inputZip" required
-                    [(ngModel)]="address.zip" #zip="ngModel" maxlength="10" placeholder="Enter Zip">
+                    [(ngModel)]="address.zip" #zip="ngModel" maxlength="10" pattern="^[0-9]+" placeholder="Enter Zip">
                     <small *ngIf="zip.invalid && addressForm.submitted" class="badge badge-danger mt-1 ml-1">
                       <div *ngIf="zip.errors.required">
                         <i class="fas fa-exclamation-circle"></i> Zip is required.

@@ -13,6 +13,7 @@ export class GlobalService {
     loading = false;
 	cart: Cart = new Cart();
 	userAuth :userAuth = new userAuth();
+	paymentDone = false;
 
 	constructor(private httpService:HttpRequestService){
 		this.userAuth.init();

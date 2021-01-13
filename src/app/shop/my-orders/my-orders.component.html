@@ -1,0 +1,123 @@
+<div class="moduleContainer">
+    <h5 class="grey-color"> <span class="pointer-cursor text-info p-0" routerLink="../"> <i
+        class="fas fa-arrow-left"></i> Shop</span> | Your orders</h5>
+        <p>Orders which you've placed.</p>
+    <hr class="my-4">
+    <div class="row box-container mx-2 p-2">
+        <!-- <div class=" p-4"> -->
+            <div class="col-12">
+                <h4>Current Orders </h4><small class="form-text text-muted">You can only cancel an order before 24 hours of placing one. </small>
+                <div *ngIf="currentOrders.length == 0"  class="mt-3">
+                    You have no current orders.
+                </div>
+            </div>
+            <div *ngFor="let order of currentOrders;let i=index" class="col-12 col-md-4 col-lg-3 mt-3 text-center">
+                <div>Order ID : {{order.id}}</div>
+                <div>Placed on : {{order.createdOn | date:'medium'}}</div>
+                <div>Status : 
+                    <span class="badge badge-success">{{
+                        (order.status=='ACCEPTED')? 'Accepted':(
+                            (order.status=='DISPATCHED')?'Dispatched':(
+                                (order.status=='OUT_FOR_DELIVERY') ? 'Out For Delivery': 'Status unknown'
+                            )
+                        )    
+                    }}</span>
+                </div>
+                <div>Payment ID : {{order.clientPaymentId}}</div>
+                <div>Total Amount: {{order.totalPrice/100}}</div>
+                <div class="mx-2"><button type="button" class="btn btn-outline-primary btn-block btn-sm  mt-2"  (click)="getOrderDetails(order.id)">More Details</button></div>
+                <div class="mx-2"><button type="button" class="btn btn-outline-danger btn-block btn-sm  mt-2" (click)="selectOrderForCancel(order)">Cancel</button></div>
+            </div>
+            <div class="col-12 p-0">
+                <div class="m-2 mx-4 d-md-flex align-items-center justify-content-between grey-color">
+                    <div class="font-italic d-flex justify-content-center d-md-block">Showing {{currentPageDetails.numberOfElements}} of {{currentPageDetails.totalElements}} orders</div>
+                    <span class="mt-2 d-flex justify-content-center d-md-block">
+                    <button class="btn btn-outline-secondary btn-sm" [disabled]="currentPageDetails.first" (click)="prevPageCurrentOrders()"><i class="fas fa-chevron-left mr-1"></i> Previous</button>
+                    <span class="mx-2">{{currentPageNo+1}} / {{currentPageDetails.totalPages}}</span>
+                    <button class="btn btn-outline-secondary btn-sm" [disabled]="currentPageDetails.last" (click)="nextPageCurrentOrders()"> Next  <i class="fas fa-chevron-right ml-1"></i> </button>
+                    </span>
+                </div>
+            </div>
+        <!-- </div> -->
+    </div>
+    <div class="row box-container m-2 p-2">
+        <!-- <div class=" p-4"> -->
+            <div class="col-12">
+                <h4>Previous Orders</h4>
+                <div *ngIf="oldOrders.length == 0"  class="mt-3">
+                    You have no previous orders.
+                </div>
+            </div>
+            <div *ngFor="let order of oldOrders;let i=index" class="col-12 col-md-4 col-lg-3 mt-3 text-center">
+                <div>Order ID : {{order.id}}</div>
+                <div>Placed on : {{order.createdOn | date:'medium'}}</div>
+                <div>Status : 
+                    <span *ngIf="order.status == 'DELIVERED'" class="badge badge-success">Delivered</span>
+                    <span *ngIf="order.status == 'CANCELLED'" class="badge badge-danger">Cancelled</span>
+                </div>
+                <div>Payment ID : {{order.clientPaymentId}}</div>
+                <div>Total Amount: {{order.totalPrice/100}}</div>
+                <div class="mx-2"><button type="button" class="btn btn-outline-primary btn-block btn-sm  mt-2" (click)="getOrderDetails(order.id)">More Details</button></div>
+            </div>
+            <div class="col-12 p-0">
+                <div class="m-2 mx-4 d-md-flex align-items-center justify-content-between grey-color">
+                    <div class="font-italic d-flex justify-content-center d-md-block">Showing {{oldPageDetails.numberOfElements}} of {{oldPageDetails.totalElements}} orders</div>
+                    <span class="mt-2 d-flex justify-content-center d-md-block">
+                    <button class="btn btn-outline-secondary btn-sm" [disabled]="oldPageDetails.first" (click)="prevPageOldOrders()"><i class="fas fa-chevron-left mr-1"></i> Previous</button>
+                    <span class="mx-2">{{oldPageNo+1}} / {{oldPageDetails.totalPages}}</span>
+                    <button class="btn btn-outline-secondary btn-sm" [disabled]="oldPageDetails.last" (click)="nextPageOldOrders()"> Next <i class="fas fa-chevron-right ml-1"></i> </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    <!-- </div> -->
+</div>
+
+
+<ng-template #cancelorder>
+    <div class="modal-body">
+      Are you sure you want to cancel the order?
+      <div class="mt-2 d-flex justify-content-center">
+        <button class="btn btn-danger btn-sm w-25" (click)="modelRef.hide()">No</button>
+        <button class="btn btn-success btn-sm ml-2 w-25" (click)="cancelOrder()">Yes</button>
+      </div>
+    </div>
+</ng-template>
+
+<ng-template #orderdetails>
+    <div class="modal-body">
+        <div class="d-flex justify-content-center"><h4>Order #{{orderInfo.id}}</h4></div>
+        <div class="stepper-margin"  *ngIf="orderInfo.status != 'CANCELLED'">
+                <app-stepper [obj]="stepperJson"></app-stepper>
+        </div>
+        <div *ngIf="orderInfo.status == 'CANCELLED'" class="d-flex justify-content-center my-3">
+            <h6 class="text-danger">No tracking details as order was cancelled.</h6>
+        </div>
+        <b>Products in this order:</b>
+        <div class="mt-3" *ngFor="let prod of orderInfo.orderDetails.productIndexes; let i = index">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <div class="d-flex ">
+                        <div class="prod-thumbnail">
+                            <img class="prod-image card-img-top cart-img" [src]="getImage(orderInfo.orderDetails.products[prod].id)" alt="Card image cap">
+                        </div>
+                    </div>
+                    <div >
+                        <div class="pointer-cursor zoom-on-hover" routerLink="../products/{{orderInfo.orderDetails.products[prod].categoryId}}/product-details/{{orderInfo.orderDetails.products[prod].id}}"><b>{{orderInfo.orderDetails.products[prod].name}}</b></div>
+                        <div *ngIf="orderInfo.orderDetails.products[prod].size">Size : {{orderInfo.orderDetails.products[prod].size}}</div>
+                        <div *ngIf="orderInfo.orderDetails.products[prod].gender">Gender : {{orderInfo.orderDetails.products[prod].gender}}</div>
+                        <div>Quantity : {{orderInfo.orderDetails.products[prod].quantity}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr *ngIf="i != (orderInfo.orderDetails.productIndexes.length-1)" class="w-5 border-top">
+        </div>
+        <div>
+            <b>Amount Paid :</b> {{orderInfo.totalPrice/100}} /-
+        </div>
+      <div class="mt-2 d-flex justify-content-center">
+        <button class="btn btn-primary btn-sm w-25" (click)="modelRef.hide()">Close</button>
+      </div>
+    </div>
+</ng-template>

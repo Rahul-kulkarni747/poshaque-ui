@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="stepper">
+          <ul class="nav nav-tabs" [ngClass]="{'nav-vertical nav-tabs-vertical mt-3': obj.type == 'vertical'}" role="tablist">
+            <li role="presentation" *ngFor="let tab of obj.tabs; let i=index" class="{{tab.status}}">
+              <a class="persistant-disabled" href="#stepper-step-1" data-toggle="tab" aria-controls="stepper-step-1" role="tab" title="Step 1">
+                <span class="round-tab"></span>
+              </a>
+              <span  [ngClass]="{'step-info-vertical': obj.type == 'vertical','step-info': obj.type != 'vertical'}">{{tab.name}}</span>
+            </li><br *ngIf="obj.type == 'vertical'">
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>

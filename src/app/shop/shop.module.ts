@@ -12,6 +12,9 @@ import { RatingModule } from 'ngx-bootstrap/rating';
 import { CartComponent } from './cart/cart.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { PaymentSuccessfulComponent } from './payment-successful/payment-successful.component';
+import { StepperComponent } from '../common/stepper/stepper.component';
+import { MyOrdersComponent } from './my-orders/my-orders.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,9 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     HomeComponent, 
     ProductListComponent, 
     ProductDetailsComponent, 
-    CartComponent
+    CartComponent, PaymentSuccessfulComponent,
+    StepperComponent,
+    MyOrdersComponent
   ],
   imports: [
     CommonModule,

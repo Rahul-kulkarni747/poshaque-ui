@@ -55,7 +55,7 @@
                 <div *ngFor="let addedaddress of addresses; let i = index">
                     <div class="d-flex justify-content-between align-items-center">
                     <div class="custom-control custom-radio">
-                        <input type="radio" id="address_{{i}}" name="address" class="custom-control-input">
+                        <input type="radio" id="address_{{i}}" value="{{addedaddress.id}}" name="address" [(ngModel)]="addressId" class="custom-control-input">
                         <label class="custom-control-label" for="address_{{i}}">
                             {{addedaddress.addressLine1}}, <br>{{addedaddress.addressLine2}}, {{addedaddress.landmark}}, <br>{{addedaddress.city}}, {{addedaddress.state}} - {{addedaddress.zip}}
                         </label>
@@ -170,6 +170,9 @@
                 </div>
                 <div class="d-flex justify-content-center mt-2">
                     <button class="btn btn-success mt-2" [disabled]="this.globalService.cart.totalAmount == 0" (click)="payAmount()"><i class="fas fa-dolly mr-2"></i> Checkout</button>
+                </div>
+                <div class="d-flex justify-content-center mt-2">
+                    <small class="badge badge-danger mt-1 ml-1" *ngIf="selectAddressError"><i class="fas fa-exclamation-circle"></i> Select address before checkout.</small>
                 </div>
             </div>
         </div>
